@@ -16,17 +16,12 @@
     .signup h2 {
         font-size: 2rem;
     }
-    
-    .video-container {
-        max-width: 420px;
-        padding-bottom: 178%;
-    }
 }
 
 /* 소형 태블릿 (768px 이하) */
 @media (max-width: 768px) {
     .hero {
-        padding: 80px 0 30px;
+        padding: 100px 0 60px;
     }
     
     .hero h1 {
@@ -38,7 +33,7 @@
     }
     
     .signup {
-        padding: 25px 0 15px;
+        padding: 60px 0;
     }
     
     .signup h2 {
@@ -50,17 +45,15 @@
     }
     
     .video-container {
-        max-width: 280px;
-        margin-top: 20px;
-        margin-bottom: 30px;
-        padding-bottom: 178.5%;
+        margin-top: 25px;
+        margin-bottom: 15px;
     }
 }
 
 /* 모바일 (480px 이하) */
 @media (max-width: 480px) {
     .hero {
-        padding: 70px 0 20px;
+        padding: 90px 0 40px;
     }
     
     .hero h1 {
@@ -70,15 +63,7 @@
     
     .hero p {
         font-size: 0.9rem;
-        margin-bottom: 20px;
-    }
-    
-    .video-container {
-        max-width: 280px;
-        margin-top: 15px;
-        margin-bottom: 40px;
-        padding-bottom: 179%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+        margin-bottom: 30px;
     }
     
     .signup h2 {
@@ -87,11 +72,7 @@
     
     .signup p {
         font-size: 0.9rem;
-        margin-bottom: 15px;
-    }
-    
-    .signup {
-        padding: 20px 0 15px;
+        margin-bottom: 30px;
     }
     
     .form-group {
@@ -111,9 +92,26 @@
         padding: 12px 15px;
     }
     
-    .footer {
-        padding: 12px 0;
-        font-size: 0.85rem;
+    .video-container {
+        width: 90%;
+        min-width: 250px;
+        max-width: none;
+        margin-top: 15px;
+        margin-bottom: 40px;
+        padding-bottom: 0;
+        height: 560px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+        border-radius: 6px;
+    }
+    
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        object-fit: fill;
     }
 }
 
@@ -136,7 +134,16 @@
     }
     
     .video-container {
-        max-width: 220px;
-        padding-bottom: 180%;
+        width: 90%;
+        min-width: 200px;
+        padding-bottom: 0;
+        height: 480px;
+        border-radius: 6px;
+    }
+    
+    .video-container iframe {
+        top: 0;
+        height: 100%;
+        object-fit: fill;
     }
 }
