@@ -12,6 +12,72 @@ document.addEventListener('DOMContentLoaded', function() {
     const newEmailInput = document.getElementById('new-email');
     const newFormMessage = document.getElementById('new-form-message');
     const newSubmitBtn = document.getElementById('new-submit-btn');
+    
+    // 두 번째 새로운 이메일 폼 요소
+    const newEmailForm2 = document.getElementById('new-email-form-2');
+    const newEmailInput2 = document.getElementById('new-email-2');
+    const newFormMessage2 = document.getElementById('new-form-message-2');
+    const newSubmitBtn2 = document.getElementById('new-submit-btn-2');
+    
+    // 기본 브라우저 유효성 검사 메시지 방지
+    if (newEmailInput) {
+        newEmailInput.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            showNewMessage('올바른 이메일 주소를 입력해주세요.', false);
+        });
+        
+        // 입력 중에 유효성 검사
+        newEmailInput.addEventListener('input', function() {
+            const email = this.value.trim();
+            if (isValidEmail(email)) {
+                // 이메일이 유효하면 오류 메시지 제거
+                const formMessage = document.getElementById('new-form-message');
+                if (formMessage) {
+                    formMessage.textContent = '';
+                    formMessage.classList.remove('error-message');
+                }
+            }
+        });
+    }
+    
+    if (newEmailInput2) {
+        newEmailInput2.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            showNewMessage2('올바른 이메일 주소를 입력해주세요.', false);
+        });
+        
+        // 입력 중에 유효성 검사
+        newEmailInput2.addEventListener('input', function() {
+            const email = this.value.trim();
+            if (isValidEmail(email)) {
+                // 이메일이 유효하면 오류 메시지 제거
+                const formMessage = document.getElementById('new-form-message-2');
+                if (formMessage) {
+                    formMessage.textContent = '';
+                    formMessage.classList.remove('error-message');
+                }
+            }
+        });
+    }
+    
+    if (emailInput) {
+        emailInput.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            showMessage('올바른 이메일 주소를 입력해주세요.', false);
+        });
+        
+        // 입력 중에 유효성 검사
+        emailInput.addEventListener('input', function() {
+            const email = this.value.trim();
+            if (isValidEmail(email)) {
+                // 이메일이 유효하면 오류 메시지 제거
+                const formMessage = document.getElementById('form-message');
+                if (formMessage) {
+                    formMessage.textContent = '';
+                }
+            }
+        });
+    }
 
     if (emailForm) {
         emailForm.addEventListener('submit', async function(event) {
@@ -23,8 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = emailInput.value.trim();
             console.log('입력된 이메일:', email);
             
+            if (!email) {
+                showMessage('소식을 받아볼 이메일이 필요해요', false);
+                // 이메일 유효성 검사 실패 이벤트 로깅
+                logEvent('email_validation_failed');
+                return;
+            }
+            
             if (!isValidEmail(email)) {
-                showMessage(formMessage, '올바른 이메일 주소를 입력해주세요.', false);
+                showMessage('올바른 이메일 주소를 입력해주세요.', false);
                 // 이메일 유효성 검사 실패 이벤트 로깅
                 logEvent('email_validation_failed');
                 return;
@@ -42,14 +115,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Firebase에 이메일 저장 (firebase-config.js에 정의된 함수 사용)
                 const result = await saveEmailToFirestore(email);
                 console.log('저장 결과:', result);
+                console.log('결과 타입:', typeof result);
+                console.log('메시지 타입:', typeof result.message);
                 
                 if (result.success) {
                     // 성공 메시지 표시
-                    showMessage(result.message, true);
+                    showMessage('감사해요, 출시 소식은 가장 먼저 전해 드릴게요!', true);
                     emailInput.value = ''; // 입력 필드 초기화
                 } else {
                     // 오류 메시지 표시
-                    showMessage(result.message, false);
+                    const errorMessage = result.message ? result.message.toString() : '오류가 발생했습니다.';
+                    showMessage(errorMessage, false);
                 }
             } catch (error) {
                 // 오류 처리
@@ -65,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // 새로운 이메일 폼 제출 이벤트 처리
+    // 첫 번째 새로운 이메일 폼 제출 이벤트 처리
     if (newEmailForm) {
         newEmailForm.addEventListener('submit', async function(event) {
             event.preventDefault();
@@ -76,8 +152,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = newEmailInput.value.trim();
             console.log('입력된 이메일:', email);
             
+            if (!email) {
+                showNewMessage('소식을 받아볼 이메일이 필요해요', false);
+                // 이메일 유효성 검사 실패 이벤트 로깅
+                logEvent('email_validation_failed');
+                return;
+            }
+            
             if (!isValidEmail(email)) {
-                showNewMessage(newFormMessage, '올바른 이메일 주소를 입력해주세요.', false);
+                showNewMessage('올바른 이메일 주소를 입력해주세요.', false);
                 // 이메일 유효성 검사 실패 이벤트 로깅
                 logEvent('email_validation_failed');
                 return;
@@ -95,14 +178,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Firebase에 이메일 저장 (firebase-config.js에 정의된 함수 사용)
                 const result = await saveEmailToFirestore(email);
                 console.log('저장 결과:', result);
+                console.log('결과 타입:', typeof result);
+                console.log('메시지 타입:', typeof result.message);
                 
                 if (result.success) {
                     // 성공 메시지 표시
-                    showNewMessage(result.message, true);
+                    showNewMessage('감사해요, 출시 소식은 가장 먼저 전해 드릴게요!', true);
                     newEmailInput.value = ''; // 입력 필드 초기화
                 } else {
                     // 오류 메시지 표시
-                    showNewMessage(result.message, false);
+                    const errorMessage = result.message ? result.message.toString() : '오류가 발생했습니다.';
+                    showNewMessage(errorMessage, false);
                 }
             } catch (error) {
                 // 오류 처리
@@ -114,6 +200,69 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 제출 버튼 상태 복원
                 newSubmitBtn.disabled = false;
                 newSubmitBtn.textContent = '출시 알림 받기';
+            }
+        });
+    }
+    
+    // 두 번째 새로운 이메일 폼 제출 이벤트 처리
+    if (newEmailForm2) {
+        newEmailForm2.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            console.log('두 번째 새 폼 제출 시작');
+            
+            // 이메일 유효성 검사
+            const email = newEmailInput2.value.trim();
+            console.log('입력된 이메일:', email);
+            
+            if (!email) {
+                showNewMessage2('소식을 받아볼 이메일이 필요해요', false);
+                // 이메일 유효성 검사 실패 이벤트 로깅
+                logEvent('email_validation_failed');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNewMessage2('올바른 이메일 주소를 입력해주세요.', false);
+                // 이메일 유효성 검사 실패 이벤트 로깅
+                logEvent('email_validation_failed');
+                return;
+            }
+            
+            // 제출 버튼 비활성화 및 로딩 상태 표시
+            newSubmitBtn2.disabled = true;
+            newSubmitBtn2.textContent = '처리 중...';
+            
+            // 폼 제출 시작 이벤트 로깅
+            logEvent('form_submission_started');
+            
+            try {
+                console.log('Firebase에 이메일 저장 시도');
+                // Firebase에 이메일 저장 (firebase-config.js에 정의된 함수 사용)
+                const result = await saveEmailToFirestore(email);
+                console.log('저장 결과:', result);
+                console.log('결과 타입:', typeof result);
+                console.log('메시지 타입:', typeof result.message);
+                
+                if (result.success) {
+                    // 성공 메시지 표시
+                    showNewMessage2('감사해요, 출시 소식은 가장 먼저 전해 드릴게요!', true);
+                    newEmailInput2.value = ''; // 입력 필드 초기화
+                } else {
+                    // 오류 메시지 표시
+                    const errorMessage = result.message ? result.message.toString() : '오류가 발생했습니다.';
+                    showNewMessage2(errorMessage, false);
+                }
+            } catch (error) {
+                // 오류 처리
+                console.error('이메일 저장 중 오류:', error);
+                showNewMessage2('오류가 발생했습니다. 잠시 후 다시 시도해주세요.', false);
+                // 폼 제출 오류 이벤트 로깅
+                logEvent('form_submission_error', { error_type: 'javascript_error' });
+            } finally {
+                // 제출 버튼 상태 복원
+                newSubmitBtn2.disabled = false;
+                newSubmitBtn2.textContent = '출시 알림 받기';
             }
         });
     }
@@ -154,29 +303,66 @@ function showMessage(message, isSuccess) {
     const formMessage = document.getElementById('form-message');
     if (formMessage) {
         formMessage.textContent = message;
-        formMessage.style.color = isSuccess ? '#474973' : '#e74c3c';
         
-        // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
         if (isSuccess) {
+            formMessage.style.color = '#474973';
+            formMessage.classList.remove('error-message');
+            formMessage.classList.add('success-message');
+            // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
             setTimeout(() => {
                 formMessage.textContent = '';
+                formMessage.classList.remove('success-message');
             }, 5000);
+        } else {
+            formMessage.style.color = '#e74c3c';
+            formMessage.classList.add('error-message');
+            formMessage.classList.remove('success-message');
         }
     }
 }
 
-// 새로운 메시지 표시 함수
+// 새로운 메시지 표시 함수 (첫 번째 폼)
 function showNewMessage(message, isSuccess) {
     const formMessage = document.getElementById('new-form-message');
     if (formMessage) {
         formMessage.textContent = message;
-        formMessage.style.color = isSuccess ? '#474973' : '#e74c3c';
         
-        // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
         if (isSuccess) {
+            formMessage.style.color = '#474973';
+            formMessage.classList.remove('error-message');
+            formMessage.classList.add('success-message');
+            // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
             setTimeout(() => {
                 formMessage.textContent = '';
+                formMessage.classList.remove('success-message');
             }, 5000);
+        } else {
+            formMessage.style.color = '#e74c3c';
+            formMessage.classList.add('error-message');
+            formMessage.classList.remove('success-message');
+        }
+    }
+}
+
+// 새로운 메시지 표시 함수 (두 번째 폼)
+function showNewMessage2(message, isSuccess) {
+    const formMessage = document.getElementById('new-form-message-2');
+    if (formMessage) {
+        formMessage.textContent = message;
+        
+        if (isSuccess) {
+            formMessage.style.color = '#474973';
+            formMessage.classList.remove('error-message');
+            formMessage.classList.add('success-message');
+            // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
+            setTimeout(() => {
+                formMessage.textContent = '';
+                formMessage.classList.remove('success-message');
+            }, 5000);
+        } else {
+            formMessage.style.color = '#e74c3c';
+            formMessage.classList.add('error-message');
+            formMessage.classList.remove('success-message');
         }
     }
 }

@@ -300,13 +300,36 @@ img {
 }
 
 .new-form-message {
-    margin-top: 0px;
-    font-size: 0.85rem;
-    min-height: 0px;
+    margin-top: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    min-height: 18px;
     text-align: center;
+    font-weight: 500;
+}
+
+/* 성공 메시지 스타일 */
+.success-message {
+    color: #474973 !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+}
+
+/* 에러 메시지 스타일 */
+.error-message {
+    color: #e74c3c !important;
+    animation: shake 0.5s ease-in-out;
 }
 
 .spacer {
     height: 30px; /* 원하는 픽셀 값 */
     width: 100%;
+}
+
+/* 에러 메시지 애니메이션 */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
