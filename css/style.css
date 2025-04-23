@@ -65,7 +65,7 @@ img {
 
 /* 메인 소개 섹션 */
 .hero {
-    padding: 90px 0 20px;
+    padding: 40px 0 0px;
     text-align: center;
     background-color: var(--light-color);
 }
@@ -99,7 +99,7 @@ img {
 .signup {
     background-color: var(--light-color);
     color: var(--text-color);
-    padding: 30px 0 20px;
+    padding: 0px 0 20px;
     text-align: center;
     border-top: none;
     border-bottom: none;
@@ -233,7 +233,7 @@ img {
 /* 새로운 이메일 구독 폼 */
 .new-signup {
     background-color: var(--light-color);
-    padding: 40px 0;
+    padding: 20px 0;
 }
 
 .new-signup-title {
@@ -304,4 +304,9 @@ img {
     font-size: 0.85rem;
     min-height: 0px;
     text-align: center;
+}
+
+.spacer {
+    height: 30px; /* 원하는 픽셀 값 */
+    width: 100%;
 }

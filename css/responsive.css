@@ -26,7 +26,7 @@
 /* 소형 태블릿 (768px 이하) */
 @media (max-width: 768px) {
     .hero {
-        padding: 100px 0 60px;
+        padding: 60px 0 60px;
     }
     
     .hero h1 {
@@ -72,7 +72,7 @@
 /* 모바일 (480px 이하) */
 @media (max-width: 480px) {
     .hero {
-        padding: 90px 0 40px;
+        padding: 60px 0 0px;
     }
     
     .hero h1 {
