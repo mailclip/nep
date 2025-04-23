@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailInput = document.getElementById('email');
     const formMessage = document.getElementById('form-message');
     const submitBtn = document.getElementById('submit-btn');
+    
+    // 새로운 이메일 폼 요소
+    const newEmailForm = document.getElementById('new-email-form');
+    const newEmailInput = document.getElementById('new-email');
+    const newFormMessage = document.getElementById('new-form-message');
+    const newSubmitBtn = document.getElementById('new-submit-btn');
 
     if (emailForm) {
         emailForm.addEventListener('submit', async function(event) {
@@ -58,6 +64,59 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // 새로운 이메일 폼 제출 이벤트 처리
+    if (newEmailForm) {
+        newEmailForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            console.log('새 폼 제출 시작');
+            
+            // 이메일 유효성 검사
+            const email = newEmailInput.value.trim();
+            console.log('입력된 이메일:', email);
+            
+            if (!isValidEmail(email)) {
+                showNewMessage('올바른 이메일 주소를 입력해주세요.', false);
+                // 이메일 유효성 검사 실패 이벤트 로깅
+                logEvent('email_validation_failed');
+                return;
+            }
+            
+            // 제출 버튼 비활성화 및 로딩 상태 표시
+            newSubmitBtn.disabled = true;
+            newSubmitBtn.textContent = '처리 중...';
+            
+            // 폼 제출 시작 이벤트 로깅
+            logEvent('form_submission_started');
+            
+            try {
+                console.log('Firebase에 이메일 저장 시도');
+                // Firebase에 이메일 저장 (firebase-config.js에 정의된 함수 사용)
+                const result = await saveEmailToFirestore(email);
+                console.log('저장 결과:', result);
+                
+                if (result.success) {
+                    // 성공 메시지 표시
+                    showNewMessage(result.message, true);
+                    newEmailInput.value = ''; // 입력 필드 초기화
+                } else {
+                    // 오류 메시지 표시
+                    showNewMessage(result.message, false);
+                }
+            } catch (error) {
+                // 오류 처리
+                console.error('이메일 저장 중 오류:', error);
+                showNewMessage('오류가 발생했습니다. 잠시 후 다시 시도해주세요.', false);
+                // 폼 제출 오류 이벤트 로깅
+                logEvent('form_submission_error', { error_type: 'javascript_error' });
+            } finally {
+                // 제출 버튼 상태 복원
+                newSubmitBtn.disabled = false;
+                newSubmitBtn.textContent = '출시 알림 받기';
+            }
+        });
+    }
 
     // 스크롤에 따른 헤더 스타일 변경
     const header = document.querySelector('.header');
@@ -93,6 +152,22 @@ function isValidEmail(email) {
 // 메시지 표시 함수
 function showMessage(message, isSuccess) {
     const formMessage = document.getElementById('form-message');
+    if (formMessage) {
+        formMessage.textContent = message;
+        formMessage.style.color = isSuccess ? '#2ecc71' : '#e74c3c';
+        
+        // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
+        if (isSuccess) {
+            setTimeout(() => {
+                formMessage.textContent = '';
+            }, 5000);
+        }
+    }
+}
+
+// 새로운 메시지 표시 함수
+function showNewMessage(message, isSuccess) {
+    const formMessage = document.getElementById('new-form-message');
     if (formMessage) {
         formMessage.textContent = message;
         formMessage.style.color = isSuccess ? '#2ecc71' : '#e74c3c';

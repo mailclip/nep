@@ -16,6 +16,11 @@
     .signup h2 {
         font-size: 2rem;
     }
+    
+    /* 새로운 이메일 폼 */
+    .new-email-card {
+        max-width: 90%;
+    }
 }
 
 /* 소형 태블릿 (768px 이하) */
@@ -47,6 +52,20 @@
     .video-container {
         margin-top: 25px;
         margin-bottom: 15px;
+    }
+    
+    /* 새로운 이메일 폼 */
+    .new-signup {
+        padding: 30px 0;
+    }
+    
+    .new-signup-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+    
+    .new-email-card {
+        padding: 25px;
     }
 }
 
@@ -114,6 +133,34 @@
         border: 0;
         object-fit: fill;
     }
+    
+    /* 새로운 이메일 폼 */
+    .new-signup {
+        padding: 25px 0;
+    }
+    
+    .new-signup-title {
+        font-size: 1.3rem;
+        margin-bottom: 16px;
+    }
+    
+    .new-email-card {
+        max-width: 95%;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    .new-email-form input {
+        padding: 14px 16px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+    
+    .new-email-form button {
+        padding: 14px 16px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
 }
 
 /* 초소형 모바일 (320px 이하) */
@@ -148,5 +195,28 @@
         top: 0;
         height: 100%;
         object-fit: fill;
+    }
+    
+    /* 새로운 이메일 폼 */
+    .new-signup-title {
+        font-size: 1.3rem;
+    }
+    
+    .new-email-card {
+        padding: 15px;
+    }
+    
+    .new-email-form {
+        gap: 12px;
+    }
+    
+    .new-email-form input {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+    
+    .new-email-form button {
+        padding: 12px 14px;
+        font-size: 13px;
     }
 }
