@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('입력된 이메일:', email);
             
             if (!isValidEmail(email)) {
-                showMessage('올바른 이메일 주소를 입력해주세요.', false);
+                showMessage(formMessage, '올바른 이메일 주소를 입력해주세요.', false);
                 // 이메일 유효성 검사 실패 이벤트 로깅
                 logEvent('email_validation_failed');
                 return;
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('입력된 이메일:', email);
             
             if (!isValidEmail(email)) {
-                showNewMessage('올바른 이메일 주소를 입력해주세요.', false);
+                showNewMessage(newFormMessage, '올바른 이메일 주소를 입력해주세요.', false);
                 // 이메일 유효성 검사 실패 이벤트 로깅
                 logEvent('email_validation_failed');
                 return;
@@ -154,7 +154,7 @@ function showMessage(message, isSuccess) {
     const formMessage = document.getElementById('form-message');
     if (formMessage) {
         formMessage.textContent = message;
-        formMessage.style.color = isSuccess ? '#2ecc71' : '#e74c3c';
+        formMessage.style.color = isSuccess ? '#474973' : '#e74c3c';
         
         // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
         if (isSuccess) {
@@ -170,7 +170,7 @@ function showNewMessage(message, isSuccess) {
     const formMessage = document.getElementById('new-form-message');
     if (formMessage) {
         formMessage.textContent = message;
-        formMessage.style.color = isSuccess ? '#2ecc71' : '#e74c3c';
+        formMessage.style.color = isSuccess ? '#474973' : '#e74c3c';
         
         // 일정 시간 후 메시지 숨기기 (성공 메시지의 경우)
         if (isSuccess) {
